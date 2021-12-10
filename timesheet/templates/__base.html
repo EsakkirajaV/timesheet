@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Timesheet</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../static/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../static/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../static/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../static/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="../static/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="../static/js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../static/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../static/images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        {% include('__header.html') %}
+        {% include('__sidebar.html')%}
+        {% block content %}{% endblock%}
+        {% include('__footer.html') %}
+        <script type="text/javascript">
+          function saveDetails(id)
+          {
+            var no_of_hours ='';
+            var date_of_entry = '';
+            var project =''; 
+            var mappingid ='';
+            var savedata = {};
+            var arr = []
+            $('.timesheet_'+id).each(function(data,obj){
+              no_of_hours = $(this).val();
+              project =$(this).data('project');
+              date_of_entry = $(this).data('date');
+              mappingid = $(this).data('mappingid');
+              arr.push({no_of_hours:no_of_hours,project:project,date_of_entry:date_of_entry,mappingid:mappingid})
+            });
+            console.log(arr)
+            $.ajax({
+                url:"{{url_for('insertdata')}}",
+                type:"POST",
+                data:{'final_data':JSON.stringify(arr)},
+                success:function(data)
+                {
+                  alert(data)
+                }
+              })
+
+          }
+          </script> 
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+{% extends '__base.html' %}
+{% block content%}
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">View Timesheet</h4>
+                      
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Project</th>
+                              {% for date in data.dates %}
+                              <th>{{date}}</th>
+                              {% endfor %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                              {% for project in data.finaldata%}
+                            <tr>
+                              <td>{{project.projectname}}</td>
+                              {% for date in dates %}
+                                {% if project.date_of_entry is not none %}
+                                    {% if project.date_of_entry.strftime('%d-%b-%Y')==date %}
+                                        <td style="color:red">{{project.no_of_hours}}</td> 
+                                    {% else %}
+                                        <td>00:00</td>
+                                    {% endif %}
+                                {% else %}
+                                <td>00:00</td>
+                              {%endif%}
+                              {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            
+                          </tbody>  
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+      </div>
+    <!-- content-wrapper ends -->
+    
+  </div>
+  <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends --> 
+{% endblock %}

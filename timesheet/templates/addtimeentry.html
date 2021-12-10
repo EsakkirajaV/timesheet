@@ -1,0 +1,51 @@
+{% extends '__base.html' %}
+{% block content%}
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Timesheet Entry</h4>
+                      
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Project</th>
+                              {% for date in data.dates%}
+                              <th>{{date}}</th>
+                              {% endfor %}
+                            </tr>
+                          </thead>
+                            <tbody>
+                             {% for project in data.project_data %}
+                             <tr>
+                                 <td>{{project.projectname.capitalize()}}</td>
+                                    {% for date in range(data.dates|length) %}
+                                        <td><input type="time" name='timesheet' data-project="{{project.projectname}}" data-mappingid="{{project.up_mapping_id}}" data-date="{{data.dates[date]}}" class="timesheet_{{date+1}}" min="00:00" max="13:00" value="00:00"></td>
+                                    {% endfor %}
+                             </tr>
+                             {% endfor %}
+                             <tr>
+                                 <td></td>
+                                {% for date in range(data.dates|length) %}
+                                <td><button class="btn btn-outline-primary btn-fw" id="{{date+1}}" onclick="saveDetails(this.id)">save</button></td>
+                                {% endfor %}
+                            </tr>
+                            </tbody>  
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+      </div>
+    <!-- content-wrapper ends -->
+    
+  </div>
+  <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+
+{% endblock %}
